@@ -1,10 +1,11 @@
 import First
 
-class player_poker(): #player가 사용하는 행동
+class player_action(): #player가 사용하는 행동
 
-    def __init__(self, player_name, money):
+    def __init__(self, player_name, money, deck):
         self.player_name = str(player_name)
         self.money = int(money)
+        self.deck = deck
 
     def betting(self):
         question = input(f'베팅하시겠습니까?(Y/N):').lower()
@@ -22,6 +23,7 @@ class player_poker(): #player가 사용하는 행동
                     print('숫자를 입력해주세요')
         else:
             print('턴을 넘깁니다')
+
 
 class computer_poker(): #computer_player가 사용하는 행동
 

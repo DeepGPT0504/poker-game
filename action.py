@@ -1,12 +1,12 @@
-import First.py
+import First
 
 class player_poker(): #player가 사용하는 행동
 
     def __init__(self, player_name, money):
-        self.player_name = player_name
-        self.money = money
+        self.player_name = str(player_name)
+        self.money = int(money)
 
-    def betting(self, user_money):
+    def betting(self):
         question = input(f'베팅하시겠습니까?(Y/N):').lower()
         if question == 'y':
             while True:
@@ -14,7 +14,7 @@ class player_poker(): #player가 사용하는 행동
                     question_2 = int(input(f'얼마를 베팅하시겠습니까?(현재 잔액: {self.money}):'))
                     if question_2 <= self.money:
                         print(f'{question_2}만큼 베팅되었습니다(현재 잔액: {self.money-question_2})')
-                        user_money =- question_2
+                        self.money -= question_2
                         break
                     else:
                         print('잔액이 부족합니다')
@@ -25,16 +25,11 @@ class player_poker(): #player가 사용하는 행동
 
 class computer_poker(): #computer_player가 사용하는 행동
 
-    def __init__(self, player_name, money, point):
+    def __init__(self, player_name, money, z_score):
         self.player_name = player_name
         self.money = money
-        self.point = point
+        self.z_score = z_score
 
-name = 'john'
-money = 1000
 
-user = player_poker(name, money)
-user.betting(money)
-user.betting(money)
 
         

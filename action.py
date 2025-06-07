@@ -22,7 +22,7 @@ class player_action(): #player가 사용하는 행동
                     print('숫자를 입력해주세요')
         else:
             print('턴을 넘깁니다')
-            return 0
+            return -1
         
     def back_money(self): #class에 저장된 금액 반환
         return self.money

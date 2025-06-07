@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
 from planoffirst import ranks, suits, deck
-#카드 52장에 대한 경우의 수 random 설정정
+#카드 52장에 대한 경우의 수 random 설정
 
 
 #플레이어 수 설정

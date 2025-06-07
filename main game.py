@@ -35,6 +35,9 @@ def main():
                 del deck[a]
 
             #playing game
+
+            #round 1
+            print('round 1')
             for i in range(0,3):
                 a = rd.randint(0,len(deck)-1)
                 community_card.append(deck[a])
@@ -46,9 +49,42 @@ def main():
             show_community_card(1, community_card)
             print()
             print()
-                
+            print(f'당신의 카드로 해당하는 족보:{determine_jokbo(user_deck,community_card)}')
+            bank = bank + user.betting()
 
-            #money = bank + user.back_money()
+            #round 2
+            print('round 2')
+            a = rd.randint(0,len(deck)-1)
+            community_card.append(deck[a])
+            del deck[a]
+
+            print(f'당신의 손패 입니다: {user_deck}')
+            print()
+            print('커뮤니티 카드입니다:',end="")
+            show_community_card(2, community_card)
+            print()
+            print()
+            print(f'당신의 카드로 해당하는 족보:{determine_jokbo(user_deck,community_card)}')
+            bank = bank + user.betting()
+
+            #round 3
+            print('round 3')
+            a = rd.randint(0,len(deck)-1)
+            community_card.append(deck[a])
+            del deck[a]
+
+            print(f'당신의 손패 입니다: {user_deck}')
+            print()
+            print('커뮤니티 카드입니다:',end="")
+            show_community_card(3, community_card)
+            print()
+            print()
+            print(f'당신의 카드로 해당하는 족보:{determine_jokbo(user_deck,community_card)}')
+            bank = bank + user.betting()
+            
+            #플레이어가 이겨서 판돈 얻음
+            print(f'승리! {bank}만큼 따셨습니다!')    
+            money = bank + user.back_money()
 
                 
 

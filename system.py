@@ -86,6 +86,16 @@ z_score_jokbo = {
      'High Card': 10
 }
 
+def get_z(user_deck, community_card):    
+    #3) 족보 판별 시스템
+    result = determine_jokbo(user_deck, community_card)
+    print("현재 게임 나의 카드로 가능한 족보중 가장 순위가 높은 것:", result)
+
+    #4) 족보 기반 점수 판별 시스템
+    result_key = result
+    score = z_score_jokbo.get(result_key, 0)()
+    print(f"당신의 족보 점수는 {score}이며, 이를 바탕으로 배팅하세요!")
+
 
     
 

@@ -99,9 +99,6 @@ class computer_action(): #computer_player가 사용하는 행동
                     bet_money = bet_money + (self.money / 4)
                     return bet_money
                 
-<<<<<<< HEAD
-                elif z_score >= 30 and (bet_money / self.money)*100 >= 20:
-=======
                 elif z_score <= 30 and (bet_money / self.money)*100 >= 60: #폴드
                     self.say_fold = True
                     return bet_money
@@ -111,7 +108,6 @@ class computer_action(): #computer_player가 사용하는 행동
                     return bet_money # 콜
                 
 
->>>>>>> ff8bce1e260210a0de904669defa0d029e574fff
                     
 
 

@@ -92,7 +92,7 @@ class computer_action(): #computer_player가 사용하는 행동
                 if z_score >= 70 and (bet_money / self.money)*100 >= 50: #레이즈
                     bet_money = bet_money + (self.money / 4)
                 
-                elif z_score >= 30 and (bet_money / self.money)*100 >= 20
+                elif z_score >= 30 and (bet_money / self.money)*100 >= 20:
                     
 
 

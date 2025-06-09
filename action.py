@@ -89,10 +89,21 @@ class computer_action(): #computer_player가 사용하는 행동
             if self.say_fold == True:
                 return bet_money
             else:
-                if z_score >= 70 and (bet_money / self.money)*100 >= 50: #레이즈
+                if z_score >= 70 and (bet_money / self.money)*100 >= 50 : #레이즈_1
                     bet_money = bet_money + (self.money / 4)
+                    return bet_money
+                elif z_score >= 30 and (bet_money / self.money)*100 >= 20: #레이즈_2
+                    bet_money = bet_money + (self.money / 4)
+                    return bet_money
                 
-                elif z_score >= 30 and (bet_money / self.money)*100 >= 20
+                elif z_score <= 30 and (bet_money / self.money)*100 >= 60: #폴드
+                    self.say_fold = True
+                    return bet_money
+                
+                else:
+                    return bet_money # 콜
+                
+
                     
 
 

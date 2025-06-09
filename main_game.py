@@ -59,7 +59,8 @@ def main():
             player_class_order[order+1].minus_money(500)
             if player_order[order+2] == "player":
                 bet_money = user.actions(500)
-            else
+            else:
+                player_order[order+2]
             
             bank = bank + 500
 

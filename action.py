@@ -1,3 +1,4 @@
+import random as rd
 
 class player_action(): #player가 사용하는 행동
 
@@ -31,12 +32,51 @@ class player_action(): #player가 사용하는 행동
     
 
 
-class computer_poker(): #computer_player가 사용하는 행동
+class computer_action(): #computer_player가 사용하는 행동
 
-    def __init__(self, player_name, money, z_score):
+    def __init__(self, player_name, money):
         self.player_name = player_name
         self.money = money
-        self.z_score = z_score
+
+    def cal_betting_momney(self, z_score):
+        x = rd.randint(0,10)
+
+        if z_score <= 30 and x <= 7: #손 패가 원 페어 이하일 때 30% 확률로 컴퓨터가 거짓 베팅을 시도한다
+            betting_money = self.money * (rd.randint(40,80)/100)
+            return betting_money
+        elif z_score >= 60 and x <= 6: #손 패가 스트레이트 이상일 때 40% 확률로 거짓 베팅을 시도한다
+            betting_money = self.money * (rd.randint(10,40)/100)
+            return betting_money
+        else: #정석 베팅팅
+            if z_score == 100:
+                betting_money = self.money * (rd.randint(70,100)/100)
+                return betting_money
+            elif z_score == 90:
+                betting_money = self.money * (rd.randint(60,80)/100)
+                return betting_money
+            elif z_score == 80:
+                betting_money = self.money * (rd.randint(50,70)/100)
+                return betting_money
+            elif z_score == 70:
+                betting_money = self.money * (rd.randint(30,60)/100)
+                return betting_money
+            elif z_score == 60:
+                betting_money = self.money * (rd.randint(20,50)/100)
+                return betting_money
+            elif z_score == 50:
+                betting_money = self.money * (rd.randint(10,40)/100)
+                return betting_money
+            elif z_score == 40:
+                betting_money = self.money * (rd.randint(10,40)/100)
+                return betting_money
+            elif z_score == 30:
+                betting_money = self.money * (rd.randint(10,40)/100)
+                return betting_money
+            else:
+                betting_money = self.money * (rd.randint(10,30)/100)
+                return betting_money
+        
+
 
 
 

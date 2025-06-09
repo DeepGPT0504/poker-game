@@ -2,11 +2,12 @@ import random as rd
 
 class player_action(): #player가 사용하는 행동
 
-    def __init__(self, player_name, money, deck, say_fold):
+    def __init__(self, player_name, money, deck, say_fold,say_call):
         self.player_name = str(player_name)
         self.money = int(money)
         self.deck = deck
         self.say_fold = say_fold
+        self.say_call = say_call
 
     def actions(self, bet_money):
         while True:
@@ -22,6 +23,7 @@ class player_action(): #player가 사용하는 행동
                     else:
                         return bet_money + question_2
                 elif question == '콜':
+                    self.say_call = True
                     return bet_money
                 elif question == '폴드':
                     self.say_fold = True
@@ -38,10 +40,11 @@ class player_action(): #player가 사용하는 행동
 
 class computer_action(): #computer_player가 사용하는 행동
 
-    def __init__(self, player_name, money,say_fold):
+    def __init__(self, player_name, money,say_fold,say_call):
         self.player_name = player_name
         self.money = money
         self.say_fold = say_fold
+        self.say_call = say_call
 
     def cal_betting_momney(self, z_score):
         x = rd.randint(0,10)
@@ -101,6 +104,7 @@ class computer_action(): #computer_player가 사용하는 행동
                     return bet_money
                 
                 else:
+                    self.say_call = True
                     return bet_money # 콜
                 
 

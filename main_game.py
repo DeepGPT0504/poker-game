@@ -25,10 +25,10 @@ def main():
             com2_deck = []
             com3_deck = []
             community_card = []
-            user = player_action('player', money, user_deck,False)
-            com1 = computer_action('com1', money, com1_deck,False)
-            com2 = computer_action('com2', money, com2_deck,False)
-            com3 = computer_action('com3', money, com3_deck,False)
+            user = player_action('player', money, user_deck,False,False)
+            com1 = computer_action('com1', money, com1_deck,False,False)
+            com2 = computer_action('com2', money, com2_deck,False,False)
+            com3 = computer_action('com3', money, com3_deck,False,False)
             player_order = ['player','com1','com2','com3','player']
             player_class_order = [user,com1,com2,com3,user]
             bank = 0
@@ -57,10 +57,13 @@ def main():
             player_class_order[order].minus_money(250)
             bank = bank + 250
             player_class_order[order+1].minus_money(500)
-            if player_order[order+2] == "player":
-                bet_money = user.actions(500)
-            else:
-                player_order[order+2]
+            while True:
+                if player_order[order+2] == "player":
+                    bet_money = user.actions(500)
+                else:
+                    bet_money = player_class_order[order+2].actions(500,get_z)
+            
+
             
             bank = bank + 500
 

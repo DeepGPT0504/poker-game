@@ -2,35 +2,39 @@ import random as rd
 
 class player_action(): #player가 사용하는 행동
 
-    def __init__(self, player_name, money, deck):
+    def __init__(self, player_name, money, deck, say_fold):
         self.player_name = str(player_name)
         self.money = int(money)
         self.deck = deck
+        self.say_fold = say_fold
 
-    def betting(self):
-        question = input(f'베팅하시겠습니까?(Y/N):').lower()
-        if question == 'y':
-            while True:
-                try:
-                    question_2 = int(input(f'얼마를 베팅하시겠습니까?(현재 잔액: {self.money}):'))
-                    if question_2 <= self.money:
-                        print(f'{question_2}만큼 베팅되었습니다(현재 잔액: {self.money-question_2})')
-                        self.money -= question_2
-                        return question_2
-                    else:
+    def actions(self, bet_money):
+        while True:
+            if self.say_fold == True:
+                print('턴이 넘겨집니다.')
+                return bet_money
+            else:
+                question = input('(레이즈/콜/폴드)?: ')
+                if question == '레이즈':
+                    question_2 = input(f'얼마를 레이즈하시겠습니까?(현재 판돈{bet_money},현재 잔액{self.money}): ')
+                    if bet_money + question_2 > self.money:
                         print('잔액이 부족합니다')
-                except ValueError:
-                    print('숫자를 입력해주세요')
-        else:
-            print('턴을 넘깁니다')
-            return -1
+                    else:
+                        return bet_money + question_2
+                elif question == '콜':
+                    return bet_money
+                elif question == '폴드':
+                    self.say_fold = True
+                    return bet_money
+                else:
+                    print('다시 입력해주세요')
+
         
     def back_money(self): #class에 저장된 금액 반환
         return self.money
-
-
     
-
+    def minus_money(self, x): #class에 저장된 돈 삭감
+        self.money = self.money - x
 
 class computer_action(): #computer_player가 사용하는 행동
 
@@ -47,7 +51,7 @@ class computer_action(): #computer_player가 사용하는 행동
         elif z_score >= 60 and x <= 6: #손 패가 스트레이트 이상일 때 40% 확률로 거짓 베팅을 시도한다
             betting_money = self.money * (rd.randint(10,40)/100)
             return betting_money
-        else: #정석 베팅팅
+        else: #정석 베팅
             if z_score == 100:
                 betting_money = self.money * (rd.randint(70,100)/100)
                 return betting_money
@@ -76,6 +80,28 @@ class computer_action(): #computer_player가 사용하는 행동
                 betting_money = self.money * (rd.randint(10,30)/100)
                 return betting_money
         
+    def minus_money(self, x): #class에 저장된 돈 삭감
+        self.money = self.money - x
+
+    def actions(self, bet_money):
+        while True:
+            if self.say_fold == True:
+                return bet_money
+            else:
+                question = input('(레이즈/콜/폴드)?: ')
+                if question == '레이즈':
+                    question_2 = input(f'얼마를 레이즈하시겠습니까?(현재 판돈{bet_money},현재 잔액{self.money}): ')
+                    if bet_money + question_2 > self.money:
+                        print('잔액이 부족합니다')
+                    else:
+                        return bet_money + question_2
+                elif question == '콜':
+                    return bet_money
+                elif question == '폴드':
+                    self.say_fold = True
+                    return bet_money
+                else:
+                    print('다시 입력해주세요')
 
 
 

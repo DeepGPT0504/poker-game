@@ -74,6 +74,8 @@ def determine_jokbo(user_card,community_card): # 손패와 커뮤니티 카드�
     max_card = max(total_card, key=lambda card: rank_order_2.index(card[0]))
     return ('High Card', max_card)
 
+
+
     
 
 

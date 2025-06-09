@@ -5,7 +5,7 @@ from action import *
 
 
 def main():
-        
+    order = 0
     money = 5000
     while True:
         ask = input(f'당신의 현재 잔액: {money},게임을 진행하시겠습니까?(Y/N):').lower()
@@ -19,12 +19,18 @@ def main():
             bank = 0
 
             #setting_2
+            
             user_deck = []
             com1_deck = []
             com2_deck = []
             com3_deck = []
             community_card = []
-            user = player_action('John', money, user_deck)
+            user = player_action('player', money, user_deck,False)
+            com1 = computer_action('com1', money, com1_deck,False)
+            com2 = computer_action('com2', money, com2_deck,False)
+            com3 = computer_action('com3', money, com3_deck,False)
+            player_order = ['player','com1','com2','com3','player']
+            player_class_order = [user,com1,com2,com3,user]
             bank = 0
 
             #player card shuffle
@@ -37,19 +43,26 @@ def main():
             #playing game
 
             #round 1
-            print('round 1')
+            print('Pre-Flop')
             for i in range(0,3):
                 a = rd.randint(0,len(deck)-1)
                 community_card.append(deck[a])
                 del deck[a]
 
             print(f'당신의 손패 입니다: {user_deck}')
-            print()
-            print('커뮤니티 카드입니다:',end="")
-            show_community_card(1, community_card)
-            print()
-            print()
             print(f'당신의 카드로 해당하는 족보:{determine_jokbo(user_deck,community_card)}')
+            print()
+            print(f'Small blind:{player_order[order]},Big Blind:{player_order[order+1]}')
+            print(f'기본 베팅금:500, {player_order[order]}의 잔액 -250, {player_order[order+1]}의 잔액 -500')
+            player_class_order[order].minus_money(250)
+            bank = bank + 250
+            player_class_order[order+1].minus_money(500)
+            if player_order[order+2] == "player":
+                bet_money = user.actions(500)
+            else
+            
+            bank = bank + 500
+
             bank = bank + user.betting()
 
             #round 2
@@ -81,13 +94,25 @@ def main():
             print()
             print(f'당신의 카드로 해당하는 족보:{determine_jokbo(user_deck,community_card)}')
             bank = bank + user.betting()
+
+            #round 4
+            print('round 3')
+            a = rd.randint(0,len(deck)-1)
+            community_card.append(deck[a])
+            del deck[a]
+
+            print(f'당신의 손패 입니다: {user_deck}')
+            print()
+            print('커뮤니티 카드입니다:',end="")
+            show_community_card(3, community_card)
+            print()
+            print()
+            print(f'당신의 카드로 해당하는 족보:{determine_jokbo(user_deck,community_card)}')
+            bank = bank + user.betting()
             
             #플레이어가 이겨서 판돈 얻음
             print(f'승리! {bank}만큼 따셨습니다!')    
             money = bank + user.back_money()
-
-                
-
         
 main()
             

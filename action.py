@@ -26,19 +26,13 @@ class player_action(): #player가 사용하는 행동
                         return bet_money + question_2
                 elif question == '콜':
                     self.say_call = True
-                    return bet_money
+                    return 0
                 elif question == '폴드':
                     self.say_fold = True
-                    return bet_money
+                    return 0
                 else:
                     print('다시 입력해주세요')
 
-        
-    def back_money(self): #class에 저장된 금액 반환
-        return self.money
-    
-    def minus_money(self, x): #class에 저장된 돈 삭감
-        self.money = self.money - x
 
 class computer_action(): #computer_player가 사용하는 행동
 
@@ -88,30 +82,28 @@ class computer_action(): #computer_player가 사용하는 행동
                 betting_money = self.money * (rd.randint(10,30)/100)
                 return betting_money
         
-    def minus_money(self, x): #class에 저장된 돈 삭감
-        self.money = self.money - x
-
-    def actions(self, bet_money,z_score):
+    def actions(self,bet_money,z_score):
+        degree = self.cal_betting_momney(z_score)
         while True:
             if self.say_fold == True:
                 return bet_money
             else:
-                if z_score >= 70 and (bet_money / self.money)*100 >= 50 : #레이즈_1
+                if z_score >= 70 and bet_money >= degree : #레이즈_1
                     bet_money = bet_money + (self.money / 4)
                     self.say_raise = True
                     return bet_money
-                elif z_score >= 30 and (bet_money / self.money)*100 >= 20: #레이즈_2
+                elif z_score >= 30 and bet_money >= degree: #레이즈_2
                     bet_money = bet_money + (self.money / 4)
                     self.say_raise = True
                     return bet_money
                 
-                elif z_score <= 30 and (bet_money / self.money)*100 >= 60: #폴드
+                elif z_score <= 30 and bet_money >= degree: #폴드
                     self.say_fold = True
-                    return bet_money
+                    return 0
                 
                 else:
                     self.say_call = True
-                    return bet_money # 콜
+                    return 0 # 콜
                 
 
                     

@@ -29,7 +29,6 @@ def determine_jokbo(user_card,community_card): # 손패와 커뮤니티 카드�
         
     #족보 상관 없이 숫자로만 패를 나누는 'Full House','Straight','3 of kind','2 Pairs','1 Pair'는 숫자 모음을 만들어서 판별
     total_ranks = [ rank for (rank,suit) in total_card]
-    print(total_ranks)
     
     #Full House 판단
     total_ranks_Full = total_ranks.copy() #Full house 판단에서만 쓰일 랭크 모음
@@ -92,9 +91,26 @@ def get_z(user_deck, community_card):
     
     if isinstance(result, tuple):
         result = result[0]
+    
+    return z_score_jokbo[result]
 
-    z_score = z_score_jokbo[result]
-    return z_score 
+def round_betting(order, current_bet_money,player_1, player_2,player_3,player_4):
+    player_order = [player_1,player_2,player_3,player_4]
+    
+    while True:
+
+        if all(player_1.say_call,player_2.say_call,player_3.say_call,player_4.say_call) == True:
+             return current_bet_money
+        else:
+            first_player.actions()
+            if second_player.actions() + current_bet_money >= current_bet_money:
+
+
+
+            
+        
+
+
     
 
 

@@ -56,31 +56,31 @@ class computer_action(): #computer_player가 사용하는 행동
         else: #정석 베팅
             if z_score == 100:
                 betting_money = self.money * (rd.randint(70,100)/100)
-                return betting_money
+                return int(betting_money)
             elif z_score == 90:
                 betting_money = self.money * (rd.randint(60,80)/100)
-                return betting_money
+                return int(betting_money)
             elif z_score == 80:
                 betting_money = self.money * (rd.randint(50,70)/100)
-                return betting_money
+                return int(betting_money)
             elif z_score == 70:
                 betting_money = self.money * (rd.randint(30,60)/100)
-                return betting_money
+                return int(betting_money)
             elif z_score == 60:
                 betting_money = self.money * (rd.randint(20,50)/100)
-                return betting_money
+                return int(betting_money)
             elif z_score == 50:
                 betting_money = self.money * (rd.randint(10,40)/100)
-                return betting_money
+                return int(betting_money)
             elif z_score == 40:
                 betting_money = self.money * (rd.randint(10,40)/100)
-                return betting_money
+                return int(betting_money)
             elif z_score == 30:
                 betting_money = self.money * (rd.randint(10,40)/100)
-                return betting_money
+                return int(betting_money)
             else:
                 betting_money = self.money * (rd.randint(10,30)/100)
-                return betting_money
+                return int(betting_money)
         
     def actions(self,bet_money,z_score):
         degree = self.cal_betting_momney(z_score)
@@ -88,16 +88,17 @@ class computer_action(): #computer_player가 사용하는 행동
             if self.say_fold == True:
                 return bet_money
             else:
-                if z_score >= 70 and bet_money >= degree : #레이즈_1
-                    bet_money = bet_money + (self.money / 4)
-                    self.say_raise = True
-                    return bet_money
-                elif z_score >= 30 and bet_money >= degree: #레이즈_2
+                if z_score >= 70 and bet_money <= degree : #레이즈_1
                     bet_money = bet_money + (self.money / 4)
                     self.say_raise = True
                     return bet_money
                 
-                elif z_score <= 30 and bet_money >= degree: #폴드
+                elif z_score >= 30 and bet_money <= degree: #레이즈_2
+                    bet_money = bet_money + (self.money / 4)
+                    self.say_raise = True
+                    return bet_money
+                
+                elif z_score <= 30 and bet_money >= 2 * degree: #폴드
                     self.say_fold = True
                     return 0
                 

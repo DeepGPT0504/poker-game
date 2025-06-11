@@ -6,7 +6,7 @@ def show_community_card(a, community_cards): # a = 차례수
 
 
 def determine_jokbo(user_card,community_card): # 손패와 커뮤니티 카드를 보고 어느 족보에 해당하는지 결정한 후 해당하는 족보명를 반환
-    
+    #앙앙
     #개인 카드와 커뮤니티 카드를 정리
     total_card = user_card + community_card
     rank_order = ['2','3','4','5','6','7','8','9','T','J','Q','K','A','2','3','4','5'] # 연결된 순서 판단

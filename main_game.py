@@ -2,6 +2,20 @@ import random as rd
 from system import *
 from action import *
 
+            
+def betting_order(round_num, player_class_order):
+    if round_num == 1:
+        return player_class_order
+    elif round_num == 2:
+        return player_class_order[1:] + player_class_order[:1]
+    elif round_num == 3:
+        return player_class_order[2:] + player_class_order[:2]
+    elif round_num == 4:
+        return player_class_order[3:] + player_class_order[:3]
+    else:
+        return player_class_order
+    
+
 def main():
     order = 0
     money = 5000
@@ -14,8 +28,8 @@ def main():
     com1 = computer_action('com1', money, com1_deck,False,False,False)
     com2 = computer_action('com2', money, com2_deck,False,False,False)
     com3 = computer_action('com3', money, com3_deck,False,False,False)
-    player_order = ['player','com1','com2','com3','player']
-    player_class_order = [user,com1,com2,com3]
+    player_order = ['player', 'com1', 'com2', 'com3', 'player']
+    player_class_order = [user, com1, com2, com3]
     
     while True:
         ask = input(f'당신의 현재 잔액: {user.money},게임을 진행하시겠습니까?(Y/N):').lower()
@@ -29,8 +43,6 @@ def main():
             bank = 0
             
             
-            
-
             #카드 섞어서 배부
             for i in [user_deck,com1_deck,com2_deck,com3_deck]*2:
                 a = rd.randint(0,len(deck)-1)
@@ -60,6 +72,7 @@ def main():
             
             for round_num in range(2, 5):
                 print(f'\nround {round_num}')
+
                 if round_num <= 3:
                     a = rd.randint(0,len(deck)-1)
                     community_card.append(deck[a])
@@ -69,10 +82,13 @@ def main():
                 print('커뮤니티 카드입니다:', end="")
                 show_community_card(round_num - 1, community_card)
                 print(f'\n당신의 카드로 해당하는 족보:{determine_jokbo(user_deck,community_card)}')
-
-                z_scores = [get_z(p.deck, community_card) for p in betting_order]
-                current_max_bet = round_betting(0, , z_scores,user)
-                bank += current_max_bet * sum(not p.say_fold for p in betting_order)
+#오류
+#round배팅함수에 플레이어스라는 변수가 배팅순서인데, 이를 적용해서 해결해야함.
+                this_round_players = betting_order(round_num, player_class_order)
+                z_scores = [get_z(p.deck, community_card) for p in this_round_players]
+                
+                current_max_bet = round_betting(0, this_round_players, z_scores, user)
+                bank += current_max_bet * sum(not p.say_fold for p in this_round_players)
 
             player_jokbo_dic = {}
             for i in player_class_order:
@@ -104,4 +120,3 @@ def main():
             community_card = []
 
 main()
-            

@@ -2,12 +2,13 @@ import random as rd
 
 class player_action(): #player가 사용하는 행동
 
-    def __init__(self, player_name, money, deck, say_fold,say_call):
+    def __init__(self, player_name, money, deck, say_fold,say_call,say_raise):
         self.player_name = str(player_name)
         self.money = int(money)
         self.deck = deck
         self.say_fold = say_fold
         self.say_call = say_call
+        self.say_raise = say_raise
 
     def actions(self, bet_money):
         while True:
@@ -15,12 +16,13 @@ class player_action(): #player가 사용하는 행동
                 print('턴이 넘겨집니다.')
                 return bet_money
             else:
-                question = input('(레이즈/콜/폴드)?: ')
+                question = input(f'(레이즈/콜/폴드)?{bet_money}: ')
                 if question == '레이즈':
-                    question_2 = input(f'얼마를 레이즈하시겠습니까?(현재 판돈{bet_money},현재 잔액{self.money}): ')
+                    question_2 = int(input(f'얼마를 레이즈하시겠습니까?(현재 판돈{bet_money},현재 잔액{self.money}): '))
                     if bet_money + question_2 > self.money:
                         print('잔액이 부족합니다')
                     else:
+                        self.say_raise = True
                         return bet_money + question_2
                 elif question == '콜':
                     self.say_call = True
@@ -40,11 +42,13 @@ class player_action(): #player가 사용하는 행동
 
 class computer_action(): #computer_player가 사용하는 행동
 
-    def __init__(self, player_name, money,say_fold,say_call):
+    def __init__(self, player_name, money,deck,say_fold,say_call,say_raise):
         self.player_name = player_name
         self.money = money
+        self.deck = deck
         self.say_fold = say_fold
         self.say_call = say_call
+        self.say_raise = say_raise
 
     def cal_betting_momney(self, z_score):
         x = rd.randint(0,10)
@@ -94,9 +98,11 @@ class computer_action(): #computer_player가 사용하는 행동
             else:
                 if z_score >= 70 and (bet_money / self.money)*100 >= 50 : #레이즈_1
                     bet_money = bet_money + (self.money / 4)
+                    self.say_raise = True
                     return bet_money
                 elif z_score >= 30 and (bet_money / self.money)*100 >= 20: #레이즈_2
                     bet_money = bet_money + (self.money / 4)
+                    self.say_raise = True
                     return bet_money
                 
                 elif z_score <= 30 and (bet_money / self.money)*100 >= 60: #폴드

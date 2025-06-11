@@ -74,7 +74,9 @@ def determine_jokbo(user_card,community_card): # 손패와 커뮤니티 카드�
     max_card = max(total_card, key=lambda card: rank_order_2.index(card[0]))
     return ('High Card', max_card)
 
-z_score_jokbo = {
+def get_z(user_deck, community_card):    
+
+    z_score_jokbo = {
      'Royal Flush': 100,
      'Straight Flush': 90,
      '4 of a kind': 80,
@@ -82,19 +84,18 @@ z_score_jokbo = {
      'Straight': 60,
      '3 of a kind': 50,
      '2 Pairs': 40,
-     '1 Pairs': 30,
+     '1 Pair': 30,
      'High Card': 10
-}
+    }
 
-def get_z(user_deck, community_card):    
-    #3) 족보 판별 시스템
     result = determine_jokbo(user_deck, community_card)
-    print("현재 게임 나의 카드로 가능한 족보중 가장 순위가 높은 것:", result)
+    
+    if isinstance(result, tuple):
+        result = result[0]
 
-    #4) 족보 기반 점수 판별 시스템
-    result_key = result
-    score = z_score_jokbo.get(result_key, 0)()
-    print(f"당신의 족보 점수는 {score}이며, 이를 바탕으로 배팅하세요!")
+    z_score = z_score_jokbo[result]
+    return z_score 
+    
 
 
     

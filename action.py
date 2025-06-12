@@ -19,7 +19,7 @@ class player_action(): #player가 사용하는 행동
                 question = input(f'무엇을 하시겠습니까?(레이즈/콜/폴드) \n 현재 베팅 금액:{bet_money}: ')
                 if question == '레이즈':
                     question_2 = int(input(f'얼마를 레이즈하시겠습니까?(현재 판돈{bet_money},현재 잔액{self.money}): '))
-                    if bet_money + question_2 > self.money:
+                    if question_2 > self.money:
                         print('잔액이 부족합니다')
                     else:
                         self.say_raise = True
@@ -47,102 +47,57 @@ class computer_action(): #computer_player가 사용하는 행동
     #컴퓨터가 본인 족보에 따라 z점수를 받아서 자신의 기준을 정한다
     def cal_betting_momney(self, z_score): 
         x = rd.randint(0,10)
-        if self.money <= 8000:
-            if z_score <= 30 and x <= 7: #손 패가 원 페어 이하일 때 30% 확률로 컴퓨터가 거짓 베팅을 시도한다
-                betting_money = self.money * (rd.randint(40,80)/100)
-                return betting_money
+             
+        if z_score <= 30 and x <= 7: #손 패가 원 페어 이하일 때 30% 확률로 컴퓨터가 거짓 베팅을 시도한다
+            betting_money = self.money * (rd.randint(20,50)/100)
+            return betting_money
             
-            elif z_score >= 60 and x <= 6: #손 패가 스트레이트 이상일 때 40% 확률로 거짓 베팅을 시도한다
-                betting_money = self.money * (rd.randint(10,40)/100)
-                return betting_money
-            
-            else: #정석 베팅
-                if z_score == 100: 
-                    betting_money = self.money * (rd.randint(70,100)/100)
-                    return int(betting_money)
-                
-                elif z_score == 90:
-                    betting_money = self.money * (rd.randint(60,80)/100)
-                    return int(betting_money)
-                
-                elif z_score == 80:
-                    betting_money = self.money * (rd.randint(50,70)/100)
-                    return int(betting_money)
-                
-                elif z_score == 70:
-                    betting_money = self.money * (rd.randint(30,60)/100)
-                    return int(betting_money)
-                
-                elif z_score == 60:
-                    betting_money = self.money * (rd.randint(20,50)/100)
-                    return int(betting_money)
-                
-                elif z_score == 50:
-                    betting_money = self.money * (rd.randint(10,40)/100)
-                    return int(betting_money)
-                
-                elif z_score == 40:
-                    betting_money = self.money * (rd.randint(10,40)/100)
-                    return int(betting_money)
-                
-                elif z_score == 30:
-                    betting_money = self.money * (rd.randint(10,40)/100)
-                    return int(betting_money)
-                
-                else:
-                    betting_money = self.money * (rd.randint(10,30)/100)
-                    return int(betting_money)
-            
-            #class에 저장된 보유 금액이 많아서 과도하게 베팅금액이 커지는 것을 방지하기 위한 부분    
-        else: 
-            if z_score <= 30 and x <= 7: #손 패가 원 페어 이하일 때 30% 확률로 컴퓨터가 거짓 베팅을 시도한다
-                betting_money = self.money * (rd.randint(20,50)/100)
-                return betting_money
-            
-            elif z_score >= 60 and x <= 6: #손 패가 스트레이트 이상일 때 40% 확률로 거짓 베팅을 시도한다
+        elif z_score >= 60 and x <= 6: #손 패가 스트레이트 이상일 때 40% 확률로 거짓 베팅을 시도한다
                 betting_money = self.money * (rd.randint(10,30)/100)
                 return betting_money
             
-            else: #정석 베팅
-                if z_score == 100: 
-                    betting_money = self.money * (rd.randint(50,80)/100)
-                    return int(betting_money)
-                
-                elif z_score == 90:
-                    betting_money = self.money * (rd.randint(40,60)/100)
-                    return int(betting_money)
-                
-                elif z_score == 80:
-                    betting_money = self.money * (rd.randint(30,50)/100)
-                    return int(betting_money)
-                
-                elif z_score == 70:
-                    betting_money = self.money * (rd.randint(10,40)/100)
-                    return int(betting_money)
-                
-                elif z_score == 60:
-                    betting_money = self.money * (rd.randint(5,45)/100)
-                    return int(betting_money)
-                
-                elif z_score == 50:
-                    betting_money = self.money * (rd.randint(5,30)/100)
-                    return int(betting_money)
-                
-                elif z_score == 40:
-                    betting_money = self.money * (rd.randint(5,30)/100)
-                    return int(betting_money)
-                
-                elif z_score == 30:
-                    betting_money = self.money * (rd.randint(5,30)/100)
-                    return int(betting_money)
-                
-                else:
-                    betting_money = self.money * (rd.randint(5,20)/100)
-                    return int(betting_money)
+        else: #정석 베팅
+            if z_score == 100: 
+                betting_money = self.money * (rd.randint(50,80)/100)
+                return int(betting_money)
+            
+            elif z_score == 90:
+                betting_money = self.money * (rd.randint(40,60)/100)
+                return int(betting_money)
+            
+            elif z_score == 80:
+                betting_money = self.money * (rd.randint(30,50)/100)
+                return int(betting_money)
+            
+            elif z_score == 70:
+                betting_money = self.money * (rd.randint(10,40)/100)
+                return int(betting_money)
+            
+            elif z_score == 60:
+                betting_money = self.money * (rd.randint(5,45)/100)
+                return int(betting_money)
+            
+            elif z_score == 50:
+                betting_money = self.money * (rd.randint(5,30)/100)
+                return int(betting_money)
+            
+            elif z_score == 40:
+                betting_money = self.money * (rd.randint(5,30)/100)
+                return int(betting_money)
+            
+            elif z_score == 30:
+                betting_money = self.money * (rd.randint(5,30)/100)
+                return int(betting_money)
+            
+            else:
+                betting_money = self.money * (rd.randint(5,20)/100)
+                return int(betting_money)
             
         
     def actions(self,bet_money,z_score,bank):
         degree = self.cal_betting_momney(z_score)
+        print(degree)
+        print(z_score)
         while True:
             if self.say_fold == True:
                 return bet_money
@@ -152,16 +107,16 @@ class computer_action(): #computer_player가 사용하는 행동
                     return 0 # 콜
                 
                 elif z_score >= 70 and bet_money <= degree : #레이즈_1
-                    bet_money = bet_money + (self.money / 4)
+                    bet_money = bet_money + (self.money / 8)
                     self.say_raise = True
                     return bet_money
                 
-                elif z_score > 30 and bet_money <= degree: #레이즈_2
-                    bet_money = bet_money + (self.money / 4)
+                elif z_score >= 30 and bet_money <= degree: #레이즈_2
+                    bet_money = bet_money + (self.money / 8)
                     self.say_raise = True
                     return bet_money
                 
-                elif z_score <= 30 and bet_money >= 2 * degree: #폴드
+                elif z_score < 30 and bet_money >= 2 * degree: #폴드
                     self.say_fold = True
                     return 0
                 

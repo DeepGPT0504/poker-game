@@ -100,6 +100,9 @@ def round_betting(starting_bet_money, players, z_scores,user,bank):
     num_players = len(players)
     player_bets = [0] * num_players
     order = 0
+    for i in players:
+        i.say_call = False
+        i.say_raise = False
 
     print(f"\n[베팅 라운드 시작] 시작 판돈: {current_bet}, [총 판돈]: {bank}\n")
 
@@ -109,8 +112,9 @@ def round_betting(starting_bet_money, players, z_scores,user,bank):
         if player.say_fold:
             print(f"{player.player_name}는 이미 폴드했습니다.")
 
-        elif player.money == 0:
+        elif player.money <= 0:
             print(f'{player.name}님은 이미 올인하셨습니다')
+            player.money = 0
             
         else:
             # 사람과 컴퓨터 분기 처리
@@ -137,6 +141,10 @@ def round_betting(starting_bet_money, players, z_scores,user,bank):
                 player.money -= raise_amount
                 current_bet = action_result
                 player_bets[order] = current_bet
+
+                for i in players:
+                    i.say_call = False
+                    i.say_raise = False
 
         # 라운드 종료
         active_bets = [player_bets[i]  for i in range(num_players) if players[i].say_fold != True]

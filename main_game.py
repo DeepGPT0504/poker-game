@@ -29,8 +29,9 @@ def main():
 #포커 게임의 진행과정을 구성하는 코드    
 
     print("|===========================================================|")
-    ask = input(f'|당신의 현재 잔액: {user.money},게임을 진행하시겠습니까?(Y/N): ').lower() 
+    ask = input(f'|당신의 현재 잔액: {user.money},게임을 진행하시겠습니까?(Y/N/): ').lower() 
     #게임 진행 여부를 묻는 ask변수
+    
     if ask == 'y':
         
         #메인 덱 만들기
@@ -125,7 +126,12 @@ def main():
                 for p in player_class_order:
                     if p.player_name == max_key:
                         p.money += bank
-                    
+    
+    elif ask == 'n':
+        print('게임을 종료합니다')
+    else:
+        print('다시 입력해주세요')
+        main()
 
 main()
 

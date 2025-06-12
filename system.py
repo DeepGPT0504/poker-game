@@ -6,7 +6,7 @@ def show_community_card(a, community_cards): # a = 차례수
 
 
 def determine_jokbo(user_card,community_card): # 손패와 커뮤니티 카드를 보고 어느 족보에 해당하는지 결정한 후 해당하는 족보명를 반환
-
+    
     #개인 카드와 커뮤니티 카드를 정리
     total_card = user_card + community_card
     rank_order = ['2','3','4','5','6','7','8','9','T','J','Q','K','A','2','3','4','5'] # 연결된 순서 판단
@@ -94,6 +94,7 @@ def get_z(user_deck, community_card):
     
     return z_score_jokbo[result]
 
+#각 round에서 베팅 단계를 수행하는 함수
 def round_betting(starting_bet_money, players, z_scores,user,bank):
     current_bet = starting_bet_money
     num_players = len(players)
@@ -107,6 +108,9 @@ def round_betting(starting_bet_money, players, z_scores,user,bank):
 
         if player.say_fold:
             print(f"{player.player_name}는 이미 폴드했습니다.")
+
+        elif player.money == 0:
+            print(f'{player.name}님은 이미 올인하셨습니다')
             
         else:
             # 사람과 컴퓨터 분기 처리
@@ -135,14 +139,15 @@ def round_betting(starting_bet_money, players, z_scores,user,bank):
                 player_bets[order] = current_bet
 
         # 라운드 종료
-        active_bets = [player_bets[i]  for i in range(num_players) if players[i].say_fold != True and players[i].say_call == True]
+        active_bets = [player_bets[i]  for i in range(num_players) if players[i].say_fold != True]
         if len(active_bets) >= 2 and all(bet == current_bet for bet in active_bets):
             print("\n[베팅 라운드 종료]\n")
             break
 
         order = (order + 1) % num_players
 
-    return current_bet
+    return current_bet #플레이어들이 베팅으로 올린 현재 베팅가를 반환
+
 
 
 

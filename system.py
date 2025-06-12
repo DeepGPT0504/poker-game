@@ -94,36 +94,39 @@ def get_z(user_deck, community_card):
     
     return z_score_jokbo[result]
 
-def round_betting(starting_bet_money, players, z_scores,user):
+def round_betting(starting_bet_money, players, z_scores,user,bank):
     current_bet = starting_bet_money
     num_players = len(players)
     player_bets = [0] * num_players
     order = 0
 
-    print(f"\n[베팅 라운드 시작] 시작 판돈: {current_bet}\n")
+    print(f"\n[베팅 라운드 시작] 시작 판돈: {current_bet}, [총 판돈]: {bank}\n")
 
     while True:
         player = players[order]
 
         if player.say_fold:
             print(f"{player.player_name}는 이미 폴드했습니다.")
+            
         else:
             # 사람과 컴퓨터 분기 처리
             if player == user:
                 action_result = player.actions(current_bet)
             else:
                 z_score = z_scores[order]
-                action_result = player.actions(current_bet, z_score)
+                action_result = player.actions(current_bet, z_score,bank)
 
             # 행동 반영
             if player.say_fold:
                 print(f"{player.player_name}가 폴드했습니다.")
                 player_bets[order] = 0
+            
             elif player.say_call:
                 call_amount = current_bet - player_bets[order]
                 print(f"{player.player_name}가 콜했습니다. {call_amount} 만큼 추가 지불")
                 player.money -= call_amount
                 player_bets[order] = current_bet
+            
             elif player.say_raise:
                 raise_amount = action_result - current_bet
                 print(f"{player.player_name}가 레이즈했습니다! {raise_amount} 만큼 판돈 증가")
@@ -132,8 +135,8 @@ def round_betting(starting_bet_money, players, z_scores,user):
                 player_bets[order] = current_bet
 
         # 라운드 종료
-        active_bets = [player_bets[i]  for i in range(num_players) if players[i].say_fold != True]
-        if len(active_bets) >= 1 and all(bet == current_bet for bet in active_bets):
+        active_bets = [player_bets[i]  for i in range(num_players) if players[i].say_fold != True and players[i].say_call == True]
+        if len(active_bets) >= 2 and all(bet == current_bet for bet in active_bets):
             print("\n[베팅 라운드 종료]\n")
             break
 

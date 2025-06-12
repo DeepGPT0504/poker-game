@@ -16,7 +16,7 @@ class player_action(): #player가 사용하는 행동
                 print('턴이 넘겨집니다.')
                 return bet_money
             else:
-                question = input(f'(레이즈/콜/폴드)?{bet_money}: ')
+                question = input(f'무엇을 하시겠습니까?(레이즈/콜/폴드) \n 현재 베팅 금액:{bet_money}: ')
                 if question == '레이즈':
                     question_2 = int(input(f'얼마를 레이즈하시겠습니까?(현재 판돈{bet_money},현재 잔액{self.money}): '))
                     if bet_money + question_2 > self.money:
@@ -82,13 +82,17 @@ class computer_action(): #computer_player가 사용하는 행동
                 betting_money = self.money * (rd.randint(10,30)/100)
                 return int(betting_money)
         
-    def actions(self,bet_money,z_score):
+    def actions(self,bet_money,z_score,bank):
         degree = self.cal_betting_momney(z_score)
         while True:
             if self.say_fold == True:
                 return bet_money
             else:
-                if z_score >= 70 and bet_money <= degree : #레이즈_1
+                if bank >= degree:
+                    self.say_call = True
+                    return 0 # 콜
+                
+                elif z_score >= 70 and bet_money <= degree : #레이즈_1
                     bet_money = bet_money + (self.money / 4)
                     self.say_raise = True
                     return bet_money

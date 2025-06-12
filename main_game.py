@@ -52,8 +52,8 @@ def main():
         #프리 플랍 라운드 시작
         print('|라운드가 시작합니다! ::               Pre-Flop             |')
         print(f'|순서는 {player_order}순서로 진행됩니다!|')
-        print("|===========================================================|")
-        print(f'당신의 손패 입니다: {user_deck}\n') #현재 나의 카드(user)를 공개개
+        print("+===========================================================+")
+        print(f'|당신의 손패 입니다: {user_deck}\n') #현재 나의 카드(user)를 공개개
         print(f'Small blind:{player_order[0]},Big Blind:{player_order[1]}')
         #첫 라운드에 배팅해야하는 최소한의 금액: Small blind, S.b보다 큰 금액...B.b 
         player_class_order[0].money -= 250
@@ -100,25 +100,28 @@ def main():
                     break
 
             #라운드별 최종 승자 판별 코드(폴드를 하지않은 이들에 대해 점수 계산)
-            player_jokbo_dic = {}
+            player_jokbo_dic_1 = {}
+            player_jokbo_dic_2 = {}
             for i in player_class_order:
                 if not i.say_fold:
-                    player_jokbo_dic[i.player_name] = get_z(i.deck, community_card)
+                    player_jokbo_dic_1[i.player_name] = get_z(i.deck, community_card)
+                    player_jokbo_dic_2[i.player_name] = determine_jokbo(i.deck,community_card)
 
-            max_key = max(player_jokbo_dic, key=player_jokbo_dic.get)
-            print(player_jokbo_dic)
+            max_key = max(player_jokbo_dic_1, key=player_jokbo_dic_1.get)
+            print(player_jokbo_dic_2)
+            
 
             #최종 승자 print
             if max_key == 'player':
-                print("=======================================")
+                print("+=====================================+")
                 print(f'|승리! {bank}만큼 따셨습니다!          |')    
-                print("=======================================")
+                print("+=====================================+")
                 user.money += bank
 
             else:
-                print("=======================================")
+                print("+=====================================+")
                 print(f'|        {max_key} 님의 승리!        |')
-                print("=======================================")
+                print("+=====================================+")
                 for p in player_class_order:
                     if p.player_name == max_key:
                         p.money += bank

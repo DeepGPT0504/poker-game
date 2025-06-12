@@ -24,8 +24,10 @@ class player_action(): #player가 사용하는 행동
                     while True:
 
                         question_2 = input(f'얼마를 레이즈하시겠습니까?(현재 판돈{bet_money},현재 잔액{self.money})(취소): ')
-                        if type(question_2) == int and question_2 > self.money:
-                            print('잔액이 부족합니다')
+                        if type(question_2) == int and bet_money + question_2 > self.money:
+                            question_3 = input('잔액이 부족합니다! 올인하시겠습니까?(y/n)').lower()
+                            if question_3 == 'y':
+                                return self.money
                         elif question_2 == '취소':
                             self.actions(bet_money)
                         else: 
@@ -108,8 +110,6 @@ class computer_action(): #computer_player가 사용하는 행동
     #컴퓨터 플레이어가 하는 행동 모음음
     def actions(self,bet_money,z_score,bank):
         degree = self.cal_betting_momney(z_score)
-        print(degree)
-        print(z_score)
         while True:
             if self.say_fold == True:
                 return bet_money

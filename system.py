@@ -104,6 +104,8 @@ def round_betting(starting_bet_money, players, z_scores,user,bank):
         i.say_call = False
         i.say_raise = False
 
+
+
     print(f"\n[베팅 라운드 시작] 시작 판돈: {current_bet}, [총 판돈]: {bank}\n")
 
     while True:
@@ -146,11 +148,11 @@ def round_betting(starting_bet_money, players, z_scores,user,bank):
                     i.say_call = False
                     i.say_raise = False
 
-        # 라운드 종료
-        active_bets = [player_bets[i]  for i in range(num_players) if players[i].say_fold != True]
-        if len(active_bets) >= 2 and all(bet == current_bet for bet in active_bets):
-            print("\n[베팅 라운드 종료]\n")
-            break
+            # 라운드 종료
+            active_bets = [player_bets[i]  for i in range(num_players) if players[i].say_fold != True]
+            if len(active_bets) >= 2 and all(bet == current_bet for bet in active_bets):
+                print("\n[베팅 라운드 종료]\n")
+                break
 
         order = (order + 1) % num_players
 

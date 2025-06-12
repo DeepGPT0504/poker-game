@@ -10,7 +10,7 @@ class player_action(): #player가 사용하는 행동
         self.say_call = say_call #플레이어의 콜 선언 여부
         self.say_raise = say_raise #플레이어의 레이즈 선언 여부
 
-    #플레이어의 행동 모음
+    #플레이어의 행동 모음+a
     def actions(self, bet_money):
         while True:
             if self.say_fold == True:

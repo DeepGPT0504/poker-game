@@ -51,14 +51,16 @@ def main():
 
         #프리 플랍 라운드 시작
         print('|라운드가 시작합니다! ::               Pre-Flop             |')
-        print(f'|순서:{player_order}')
+        print(f'|순서는 {player_order}순서로 진행됩니다!|')
+        print("|===========================================================|")
         print(f'당신의 손패 입니다: {user_deck}\n') #현재 나의 카드(user)를 공개개
         print(f'Small blind:{player_order[0]},Big Blind:{player_order[1]}')
         #첫 라운드에 배팅해야하는 최소한의 금액: Small blind, S.b보다 큰 금액...B.b 
         player_class_order[0].money -= 250
         player_class_order[1].money -= 500
         current_max_bet = 500
-        #첫 라운드의 user이외의 첫배팅 금액고정..배팅시작준비완료를 의미
+        #첫 라운드의 user이외의 첫배팅 금액고정..배팅시작준비yy
+        #y완료를 의미
 
         # 올바른 베팅 순서 적용 (SB 다음 플레이어부터)
         preflop_order = player_class_order[2:] + player_class_order[:2]
@@ -108,11 +110,15 @@ def main():
 
             #최종 승자 print
             if max_key == 'player':
-                print(f'승리! {bank}만큼 따셨습니다!')    
+                print("=======================================")
+                print(f'|승리! {bank}만큼 따셨습니다!          |')    
+                print("=======================================")
                 user.money += bank
 
             else:
-                print(f'{max_key} 님의 승리!')
+                print("=======================================")
+                print(f'|        {max_key} 님의 승리!        |')
+                print("=======================================")
                 for p in player_class_order:
                     if p.player_name == max_key:
                         p.money += bank

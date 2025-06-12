@@ -100,11 +100,6 @@ def round_betting(starting_bet_money, players, z_scores,user,bank):
     num_players = len(players)
     player_bets = [0] * num_players
     order = 0
-    for i in players:
-        i.say_call = False
-        i.say_raise = False
-
-
 
     print(f"\n[베팅 라운드 시작] 시작 판돈: {current_bet}, [총 판돈]: {bank}\n")
 
@@ -115,7 +110,7 @@ def round_betting(starting_bet_money, players, z_scores,user,bank):
             print(f"{player.player_name}는 이미 폴드했습니다.")
 
         elif player.money <= 0:
-            print(f'{player.name}님은 이미 올인하셨습니다')
+            print(f'{player.player_name}님은 이미 올인하셨습니다')
             player.money = 0
             
         else:
@@ -128,18 +123,18 @@ def round_betting(starting_bet_money, players, z_scores,user,bank):
 
             # 행동 반영
             if player.say_fold:
-                print(f"{player.player_name}가 폴드했습니다.")
+                print(f"|{player.player_name}가 폴드했습니다.")
                 player_bets[order] = 0
             
             elif player.say_call:
                 call_amount = current_bet - player_bets[order]
-                print(f"{player.player_name}가 콜했습니다. {call_amount} 만큼 추가 지불")
+                print(f"|{player.player_name}가 콜했습니다. {call_amount}만큼 추가 지불하였습니다.             |")
                 player.money -= call_amount
                 player_bets[order] = current_bet
             
             elif player.say_raise:
                 raise_amount = action_result - current_bet
-                print(f"{player.player_name}가 레이즈했습니다! {raise_amount} 만큼 판돈 증가")
+                print(f"{player.player_name}가 레이즈했습니다! {raise_amount}만큼 판돈이 증가하였습니다.        |")
                 player.money -= raise_amount
                 current_bet = action_result
                 player_bets[order] = current_bet
@@ -148,11 +143,23 @@ def round_betting(starting_bet_money, players, z_scores,user,bank):
                     i.say_call = False
                     i.say_raise = False
 
-            # 라운드 종료
-            active_bets = [player_bets[i]  for i in range(num_players) if players[i].say_fold != True]
-            if len(active_bets) >= 2 and all(bet == current_bet for bet in active_bets):
-                print("\n[베팅 라운드 종료]\n")
-                break
+        active_players = [p for p in players if not p.say_fold]
+        if len(active_players) <=1:
+            print("\n모든 플레이어가 폴드했거나 단 한 명만 남았습니다. 라운드를 종료합니다.\n")
+            break
+        
+         
+        active_not_fold_not_allin = [p for p in players if not p.say_fold and p.money > 0]
+        if len(active_not_fold_not_allin) == 0:
+           print("모든 플레이어가 올인하거나 폴드했습니다. 베팅 라운드를 종료합니다.")
+           break
+
+
+        # 라운드 종료
+        active_bets = [player_bets[i]  for i in range(num_players) if players[i].say_fold != True]
+        if len(active_bets) >= 2 and all(bet == current_bet for bet in active_bets):
+            print("\n[베팅 라운드 종료]\n")
+            break
 
         order = (order + 1) % num_players
 

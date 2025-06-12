@@ -27,8 +27,8 @@ def main():
     
 #포커 게임의 진행과정을 구성하는 코드    
 
-
-    ask = input(f'당신의 현재 잔액: {user.money},게임을 진행하시겠습니까?(Y/N):').lower()
+    print("|===========================================================|")
+    ask = input(f'|당신의 현재 잔액: {user.money},게임을 진행하시겠습니까?(Y/N): ').lower()
     #게임 진행 여부를 묻는 ask변수
     if ask == 'y':
         
@@ -49,7 +49,7 @@ def main():
 
 
         #프리 플랍 라운드 시작
-        print('Pre-Flop')
+        print('|라운드가 시작합니다! ::  Pre-Flop         |')
         print(f'순서:{player_order}')
         print(f'당신의 손패 입니다: {user_deck}\n') #현재 나의 카드(user)를 공개개
         print(f'Small blind:{player_order[0]},Big Blind:{player_order[1]}')
@@ -69,26 +69,27 @@ def main():
             a = rd.randint(0,len(deck)-1)
             community_card.append(deck[a])
             del deck[a]
-            
+        #for 반복문 : 라운드 반복              
         for round_num in range(2, 5):
             print(f'\nround {round_num}')
-
+            #라운드에 대응해 공유카드 1개 추가
             if round_num <= 3:
                 a = rd.randint(0,len(deck)-1)
-                community_card.append(deck[a])
-                del deck[a]
+                community_card.append(deck[a])#공유카드중 flop을 뽑아 추가
+                del deck[a] #위와 같이 중복카드 삭제
 
             print(f'당신의 손패 입니다: {user_deck}')
             print('커뮤니티 카드입니다:', end="")
             show_community_card(round_num - 1, community_card)
             print(f'\n당신의 카드로 해당하는 족보:{determine_jokbo(user_deck,community_card)}')
-
-            z_scores = [get_z(p.deck, community_card) for p in player_class_order]
             
+            #action의 z_score 계산 코드(족보순위에 따른 점수계산)
+            z_scores = [get_z(p.deck, community_card) for p in player_class_order]
+             #폴드하지 않은 사람 수만큼 공용배팅머니 증가
             current_max_bet = round_betting(500, player_class_order, z_scores, user, bank)
             bank += current_max_bet * sum(not p.say_fold for p in player_class_order)
 
-
+        #라운드별 최종 승자 판별 코드(폴드를 하지않은 이들에 대해 점수 계산)
         player_jokbo_dic = {}
         for i in player_class_order:
             if not i.say_fold:
@@ -97,7 +98,7 @@ def main():
         max_key = max(player_jokbo_dic, key=player_jokbo_dic.get)
         print(player_jokbo_dic)
 
-
+        #최종 승자 print
         if max_key == 'player':
             print(f'승리! {bank}만큼 따셨습니다!')    
             user.money += bank

@@ -2,8 +2,7 @@ import random as rd
 from system import *
 from action import *
 
-separator = ['-'* 15]
-
+#개
 def betting_order(round_num, player_class_order):
     if round_num == 1:
         return player_class_order
@@ -87,8 +86,7 @@ def main():
                 print('커뮤니티 카드입니다:', end="")
                 show_community_card(round_num - 1, community_card)
                 print(f'\n당신의 카드로 해당하는 족보:{determine_jokbo(user_deck,community_card)}')
-#오류
-#round배팅함수에 플레이어스라는 변수가 배팅순서인데, 이를 적용해서 해결해야함.
+
                 this_round_players = betting_order(round_num, player_class_order)
                 z_scores = [get_z(p.deck, community_card) for p in this_round_players]
                 

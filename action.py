@@ -1,5 +1,6 @@
 import random as rd
 
+#
 class player_action(): #player가 사용하는 행동
 
     def __init__(self, player_name, money, deck, say_fold,say_call,say_raise):

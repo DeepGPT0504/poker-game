@@ -22,17 +22,18 @@ class player_action(): #player가 사용하는 행동
                 #레이즈
                 if question == '레이즈':
                     while True:
-
-                        question_2 = input(f'얼마를 레이즈하시겠습니까?(현재 판돈{bet_money},현재 잔액{self.money})(취소): ')
-                        if type(question_2) == int and bet_money + question_2 > self.money:
-                            question_3 = input('잔액이 부족합니다! 올인하시겠습니까?(y/n)').lower()
-                            if question_3 == 'y':
-                                return self.money
-                        elif question_2 == '취소':
+                        try:
+                            question_2 = int(input(f'얼마를 레이즈하시겠습니까?(현재 판돈{bet_money},현재 잔액{self.money}): '))
+                            if bet_money + question_2 > self.money:
+                                print('잔액이 부족합니다!')
+                                self.actions(bet_money)
+                            else: 
+                                self.say_raise = True
+                                return bet_money + int(question_2)
+                            
+                        except ValueError:
+                            print('숫자를 입력해주세요')
                             self.actions(bet_money)
-                        else: 
-                            self.say_raise = True
-                            return bet_money + int(question_2)
                     
                 #콜
                 elif question == '콜':

@@ -1,3 +1,8 @@
+#제작게임: 텍사스 홀덤 게임
+#제작기능: 족보판별, 플레이어와 컴퓨터3명의 총 4명의 게임진행 방식을 구현
+
+
+
 import random as rd
 #python 내장 모듈인 'random'을 불러옴.
 from system import *
@@ -63,15 +68,18 @@ def main():
         #첫 라운드의 user이외의 첫배팅 금액고정..배팅시작준비yy
         #y완료를 의미
 
+
         # 올바른 베팅 순서 적용 (SB 다음 플레이어부터)
         preflop_order = player_class_order[2:] + player_class_order[:2]
         z_scores = [get_z(p.deck, community_card) for p in preflop_order]
         current_max_bet = round_betting(current_max_bet, preflop_order, z_scores,user, bank)
         bank += current_max_bet * sum(not p.say_fold for p in preflop_order)
 
+
         if com1.say_fold == True and com2.say_fold == True and com3.say_fold == True:
             print('다른 모든 플레이어가 폴드하였습니다.')
         
+
         else:
             for _ in range(3):
                 a = rd.randint(0,len(deck)-1)
@@ -119,9 +127,10 @@ def main():
                 print("+=====================================+")
                 user.money += bank
 
+
             else:
                 print("+=====================================+")
-                print(f'|        {max_key} 님의 승리!        |')
+                print(f'|            {max_key} 님의 승리!           |')
                 print("+=====================================+")
                 for p in player_class_order:
                     if p.player_name == max_key:

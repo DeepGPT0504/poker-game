@@ -134,16 +134,4 @@ class computer_action(): #computer_player가 사용하는 행동
                 
                 else:
                     self.say_call = True
-                    return 0 # 콜
-                
-
-                    
-
-
-
-                    
-
-
-
-
-        
+                    return 0 # 콜      

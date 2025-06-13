@@ -102,6 +102,9 @@ def round_betting(starting_bet_money, players, z_scores,user,bank):
     num_players = len(players)
     player_bets = [0] * num_players
     order = 0 
+    for i in players:
+        i.say_call = False
+        i.say_raise = False
     
     print(f"\n[베팅 라운드 시작] 시작 판돈: {current_bet}, [총 판돈]: {bank}\n")
     
